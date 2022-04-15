@@ -22,20 +22,16 @@ import { FormHelperText } from '@mui/material';
 const theme = createTheme();
 
 export default function SignIn() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+
     const formik = useFormik({
         initialValues: {
             email: "",
             password: ""
         },
         validationSchema: signInSchema,
+        onSubmit: (values) => {
+            console.log(values);
+        }
     });
     return (
         <ThemeProvider theme={theme}>
@@ -55,7 +51,7 @@ export default function SignIn() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box noValidate sx={{ width: '100%', mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
@@ -94,6 +90,7 @@ export default function SignIn() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={formik.handleSubmit}
                         >
                             Sign In
                         </Button>
